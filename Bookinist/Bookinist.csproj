@@ -12,6 +12,13 @@
     <Folder Include="Models\" />
     <Folder Include="ViewModels\Base\" />
     <Folder Include="Infrastructure\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MathCore.WPF" Version="0.0.44.4" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
   </ItemGroup>
 
 </Project>
