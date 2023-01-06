@@ -9,7 +9,7 @@ namespace Bookinist.DAL.Entityes
         public decimal Price { get; set; }
 
         //public virtual ICollection<Book> Books { get; set; }      
-        public virtual Book Books { get; set; }
+        public virtual Book Books { get; set; } 
         public virtual Seller Seller { get; set; }
         public virtual Buyer Buyer { get; set; }
     }

@@ -33,6 +33,8 @@ namespace Bookinist.Data
                     default:
                         throw new InvalidOperationException($"Тип подключения {type} не поддерживается");
                 }
-            });
+            })
+            .AddTransient<DbInitializer>();
+
     }
 }

@@ -7,7 +7,7 @@ namespace Bookinist.DAL.Context
     {
         public DbSet<Book> Books { get; set; }
         public DbSet<Buyer> Buyers { get; set; }
-        public DbSet<Category> Category { get; set; }
+        public DbSet<Category> Categorys { get; set; }
         public DbSet<Deal> Deals { get; set; }
         public DbSet<Seller> Sellers { get; set; }
 
