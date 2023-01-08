@@ -12,6 +12,7 @@ namespace Bookinist.ViewModels
         private readonly IRepository<Book> _books;
         private readonly IRepository<Seller> _sellers;
         private readonly IRepository<Buyer> _buyers;
+        private readonly IRepository<Deal> _deals;
         private readonly ISalesService _salesService;
 
         #region Title
@@ -63,16 +64,16 @@ namespace Bookinist.ViewModels
         private bool CanShowStatisticViewCommandExecute() => true;
         private void OnShowStatisticViewCommandExecuted()
         {
-            CurrentModel = new StatisticViewModel(
-                _books, _buyers, _sellers);
+            CurrentModel = new StatisticViewModel(_books, _buyers, _sellers, _deals);
         }
         #endregion
 
-        public MainWindowViewModel(IRepository<Book> Books, IRepository<Seller> Sellers, IRepository<Buyer> Buyers, ISalesService SalesService)
+        public MainWindowViewModel(IRepository<Book> Books, IRepository<Seller> Sellers, IRepository<Buyer> Buyers, ISalesService SalesService, IRepository<Deal> Deals)
         {
             _books = Books;
             _sellers = Sellers;
             _buyers = Buyers;
+            _deals = Deals;
             _salesService = SalesService;
         }
     }
