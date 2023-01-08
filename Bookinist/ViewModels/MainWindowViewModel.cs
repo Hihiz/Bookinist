@@ -3,7 +3,6 @@ using Bookinist.Infrastructure.Commands;
 using Bookinist.Repositories;
 using Bookinist.Services.Interfaces;
 using Bookinist.ViewModels.Base;
-using System.Linq;
 using System.Windows.Input;
 
 namespace Bookinist.ViewModels
