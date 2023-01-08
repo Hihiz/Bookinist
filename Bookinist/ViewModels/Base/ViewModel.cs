@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Configuration;
 using System.Runtime.CompilerServices;
 
 namespace Bookinist.ViewModels.Base

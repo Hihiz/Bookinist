@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace System
+﻿namespace System
 {
     static class RandomExtensions
     {

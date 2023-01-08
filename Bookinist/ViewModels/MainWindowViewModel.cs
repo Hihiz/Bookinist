@@ -19,110 +19,53 @@ namespace Bookinist.ViewModels
         public string Title { get => _title; set => Set(ref _title, value); }
         #endregion
 
-
-        #region CurrentModel : ViewModel - Текущая дочерняя модель-представления
-
+        #region CurrentModel Текущая дочерняя модель-представления
         /// <summary>
         /// Текущая дочерняя модель-представления
         /// </summary>
         private ViewModel _currentModel;
-        /// <summary>
-        /// Текущая дочерняя модель-представления
-        /// </summary>
         public ViewModel CurrentModel { get => _currentModel; private set => Set(ref _currentModel, value); }
-
         #endregion
 
-        #region Command ShowBooksViewCommand - Отобразить представление книг
-
+        #region Command ShowBooksViewCommand Отобразить представление книг
         /// <summary>
         /// Отобразить представление книг
         /// </summary>
         private ICommand _showBooksViewCommand;
-
-        /// <summary>
-        /// Отобразить представление книг
-        /// </summary>
-        public ICommand ShowBooksViewCommand => _showBooksViewCommand
-            ??= new LambdaCommand(OnShowBooksViewCommandExecuted, CanShowBooksViewCommandExecute);
-
-        /// <summary>
-        /// Проверка возможности выполнения - Отобразить представление книг
-        /// </summary>
-        /// <returns></returns>
+        public ICommand ShowBooksViewCommand => _showBooksViewCommand ??= new LambdaCommand(OnShowBooksViewCommandExecuted, CanShowBooksViewCommandExecute);
         private bool CanShowBooksViewCommandExecute() => true;
-
-
-        /// <summary>
-        /// Проверка возможности выполнения - Отобразить представление книг
-        /// </summary>
-        /// <returns></returns>
         private void OnShowBooksViewCommandExecuted()
         {
             CurrentModel = new BooksViewModel(_books);
         }
-
         #endregion
 
-        #region Command ShowBuyersViewCommand - Отобразить представление покупателей
+        #region Command ShowBuyersViewCommand Отобразить представление покупателей
 
         /// <summary>
         /// Отобразить представление покупателей
         /// </summary>
         private ICommand _showBuyersViewCommand;
-
-
-        /// <summary>
-        /// Отобразить представление покупателей
-        /// </summary>
-        public ICommand ShowBuyersViewCommand => _showBuyersViewCommand
-            ??= new LambdaCommand(OnShowBuyersViewCommandExecuted, CanShowBuyersViewCommandExecute);
-
-        /// <summary>
-        /// Проверка возможности выполнения - Отобразить представление покупателей
-        /// </summary>
-        /// <returns></returns>
+        public ICommand ShowBuyersViewCommand => _showBuyersViewCommand ??= new LambdaCommand(OnShowBuyersViewCommandExecuted, CanShowBuyersViewCommandExecute);
         private bool CanShowBuyersViewCommandExecute() => true;
-
-        /// <summary>
-        /// Логика выполнения - Отобразить представление покупателей
-        /// </summary>
         private void OnShowBuyersViewCommandExecuted()
         {
             CurrentModel = new BuyersViewModel(_buyers);
         }
-
         #endregion
 
-        #region Command ShowStatisticViewCommand - Отобразить представление статистики
-
+        #region Command ShowStatisticViewCommand  Отобразить представление статистики
         /// <summary>
         /// Отобразить представление статистики
         /// </summary>
         private ICommand _showStatisticViewCommand;
-
-
-        /// <summary>
-        /// Отобразить представление статистики
-        /// </summary>
-        public ICommand ShowStatisticViewCommand => _showStatisticViewCommand
-            ??= new LambdaCommand(OnShowStatisticViewCommandExecuted, CanShowStatisticViewCommandExecute);
-        /// <summary>
-        /// Проверка возможности выполнения - Отобразить представление статистики
-        /// </summary>
-        /// <returns></returns>
+        public ICommand ShowStatisticViewCommand => _showStatisticViewCommand ??= new LambdaCommand(OnShowStatisticViewCommandExecuted, CanShowStatisticViewCommandExecute);
         private bool CanShowStatisticViewCommandExecute() => true;
-
-        /// <summary>
-        /// Логика выполнения - Отобразить представление статистики
-        /// </summary>
         private void OnShowStatisticViewCommandExecuted()
         {
             CurrentModel = new StatisticViewModel(
-                _books, _buyers, _sellers
-                );
+                _books, _buyers, _sellers);
         }
-
         #endregion
 
         public MainWindowViewModel(IRepository<Book> Books, IRepository<Seller> Sellers, IRepository<Buyer> Buyers, ISalesService SalesService)
