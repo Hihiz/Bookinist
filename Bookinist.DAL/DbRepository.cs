@@ -1,16 +1,23 @@
 ﻿using Bookinist.DAL.Context;
+using Bookinist.DAL.Entityes;
 using Bookinist.DAL.Entityes.Base;
 using Bookinist.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bookinist.DAL
 {
-    public class DbRepository<T> : IRepository<T> where T : Entity, new()
+    internal class DbRepository<T> : IRepository<T> where T : Entity, new()
     {
         private readonly BookinistContext _db;
         private readonly DbSet<T> _set;
 
         public bool AutoSaveChanges { get; set; } = true;
+
+        public DbRepository(BookinistContext db)
+        {
+            _db = db;
+            _set = db.Set<T>();
+        }
 
         public virtual IQueryable<T> Items => _set;
 
@@ -76,11 +83,12 @@ namespace Bookinist.DAL
                 await _db.SaveChangesAsync(Cancel).ConfigureAwait(false);
 
         }
+    }
 
-        public DbRepository(BookinistContext db)
-        {
-            _db = db;
-            _set = db.Set<T>();
-        }
+    class BooksRepository : DbRepository<Book>
+    {
+        public override IQueryable<Book> Items => base.Items.Include(item => item.Category);
+
+        public BooksRepository(BookinistContext db ) : base(db) { }
     }
 }

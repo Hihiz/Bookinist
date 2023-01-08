@@ -1,4 +1,5 @@
-﻿using Bookinist.DAL.Context;
+﻿using Bookinist.DAL;
+using Bookinist.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,7 +35,8 @@ namespace Bookinist.Data
                         throw new InvalidOperationException($"Тип подключения {type} не поддерживается");
                 }
             })
-            .AddTransient<DbInitializer>();
+            .AddTransient<DbInitializer>()
+            .AddRepositoriesInDB() ;
 
     }
 }
