@@ -1,6 +1,8 @@
-﻿namespace Bookinist.DAL.Entityes.Base
+﻿using Bookinist.Repositories;
+
+namespace Bookinist.DAL.Entityes.Base
 {
-    public abstract class Entity
+    public abstract class Entity : IEntity
     {
         public int Id { get; set; }
     }
