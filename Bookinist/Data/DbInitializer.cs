@@ -26,15 +26,15 @@ namespace Bookinist.Data
             _logger.LogInformation("Инициализация БД...");
 
             _logger.LogInformation("Удаление существующей БД...");
-            await _db.Database.EnsureDeletedAsync()/*.ConfigureAwait(false)*/;
+            await _db.Database.EnsureDeletedAsync().ConfigureAwait(false);
             _logger.LogInformation($"Удаление существующей БД выполнено за {timer.ElapsedMilliseconds} мс");
 
             //_db.Database.EnsureCreated();
 
             _logger.LogInformation("Миграция БД...");
             /// создает бд (если ее нет) и накатывает на нее все миграции которые есть на текущий момент
-            await _db.Database.MigrateAsync();
-            _logger.LogInformation($"Миграция БД выполнена за {timer.ElapsedMilliseconds}");
+            await _db.Database.MigrateAsync().ConfigureAwait(false);
+            _logger.LogInformation($"Миграция БД выполнена за {timer.ElapsedMilliseconds} мс");
 
             if (await _db.Books.AnyAsync()) return;
 
@@ -44,7 +44,7 @@ namespace Bookinist.Data
             await InitializeBayers();
             await InitializeDeals();
 
-            _logger.LogInformation($"Инициализация БД выполнена за {timer.Elapsed.TotalSeconds}");
+            _logger.LogInformation($"Инициализация БД выполнена за {timer.Elapsed.TotalSeconds} с");
         }
 
         private const int _categoriesCount = 10;
@@ -62,7 +62,7 @@ namespace Bookinist.Data
             await _db.Categorys.AddRangeAsync(_categories);
             await _db.SaveChangesAsync();
 
-            _logger.LogInformation($"Инициализация категорий выполнена за {timer.ElapsedMilliseconds}");
+            _logger.LogInformation($"Инициализация категорий выполнена за {timer.ElapsedMilliseconds} мс");
         }
 
         private const int _booksCount = 10;
@@ -86,7 +86,7 @@ namespace Bookinist.Data
             await _db.Books.AddRangeAsync(_books);
             await _db.SaveChangesAsync();
 
-            _logger.LogInformation($"Инициализация книг выполнена за {timer.ElapsedMilliseconds}");
+            _logger.LogInformation($"Инициализация книг выполнена за {timer.ElapsedMilliseconds} мс");
         }
 
         private const int _sellersCount = 10;
@@ -111,7 +111,7 @@ namespace Bookinist.Data
             await _db.Sellers.AddRangeAsync(_sellers);
             await _db.SaveChangesAsync();
 
-            _logger.LogInformation($"Инициализация продавцов выполнена за {timer.ElapsedMilliseconds}");
+            _logger.LogInformation($"Инициализация продавцов выполнена за {timer.ElapsedMilliseconds} мс");
         }
 
 
@@ -137,7 +137,7 @@ namespace Bookinist.Data
             await _db.Buyers.AddRangeAsync(_buyer);
             await _db.SaveChangesAsync();
 
-            _logger.LogInformation($"Инициализация покупателей выполнена за {timer.ElapsedMilliseconds}");
+            _logger.LogInformation($"Инициализация покупателей выполнена за {timer.ElapsedMilliseconds} мс");
         }
 
         private const int _dealsCount = 1000;
@@ -148,7 +148,7 @@ namespace Bookinist.Data
             _logger.LogInformation("Инициализация сделок...");
 
             var rnd = new Random();
-            var deals = Enumerable.Range(1, _dealsCount).Select(i => new Deal
+            var deals = Enumerable.Range(1, _dealsCount).Select(i => new Deal 
             {
                 Books = rnd.NextItemRnd(_books),
                 Seller = rnd.NextItemRnd(_sellers),
@@ -159,7 +159,7 @@ namespace Bookinist.Data
             await _db.Deals.AddRangeAsync(deals);
             await _db.SaveChangesAsync();
 
-            _logger.LogInformation($"Инициализация сделок выполнена за {timer.ElapsedMilliseconds}");
+            _logger.LogInformation($"Инициализация сделок выполнена за {timer.ElapsedMilliseconds} мс");
         }
     }
 }
