@@ -18,10 +18,9 @@ namespace Bookinist.ViewModels
     class BooksViewModel : ViewModel
     {
         private readonly IRepository<Book> _booksRepository;
-
         private readonly IUserDialog _userDialog;
 
-        #region Books ObservableCollection<Book>  Коллекция     
+        #region Books ObservableCollection<Book> Коллекция книг
         private ObservableCollection<Book> _books;
         public ObservableCollection<Book> Books
         {
@@ -48,7 +47,7 @@ namespace Bookinist.ViewModels
         }
         #endregion
 
-        #region BooksFilter Искомое слово   
+        #region BooksFilter Искомое слово
         private string _booksFilter;
         public string BooksFilter
         {
@@ -62,44 +61,41 @@ namespace Bookinist.ViewModels
         #endregion
 
         private CollectionViewSource _booksViewSource;
-
         public ICollectionView BooksView => _booksViewSource?.View;
 
-        #region SelectedBook  Выбранная книга
+        #region SelectedBook Выбранная книга
         private Book _selectedBook;
         public Book SelectedBook { get => _selectedBook; set => Set(ref _selectedBook, value); }
         #endregion
 
-        #region Command LoadDataCommand  Команда загрузки данных из репозитория
+        #region Command LoadDataCommand Команда загрузки данных из репозитория     
         private ICommand _loadDataCommand;
         public ICommand LoadDataCommand => _loadDataCommand ??= new LambdaCommandAsync(OnLoadDataCommandExecuted, CanLoadDataCommandExecute);
         private bool CanLoadDataCommandExecute() => true;
         private async Task OnLoadDataCommandExecuted()
         {
-            //Books = (await _BooksRepository.Items.ToArrayAsync()).ToObservableCollection();
             Books = new ObservableCollection<Book>(await _booksRepository.Items.ToArrayAsync());
         }
         #endregion
 
-        #region Command AddNewBookCommand Добавление новой книги
+        #region Command AddNewBookCommand  Добавление новой книги
         private ICommand _addNewBookCommand;
         public ICommand AddNewBookCommand => _addNewBookCommand ??= new LambdaCommand(OnAddNewBookCommandExecuted, CanAddNewBookCommandExecute);
         private bool CanAddNewBookCommandExecute() => true;
         private void OnAddNewBookCommandExecuted()
         {
-            var newBook = new Book();
+            var new_book = new Book();
 
-            if (!_userDialog.Edit(newBook))
+            if (!_userDialog.Edit(new_book))
                 return;
 
-            _books.Add(_booksRepository.Add(newBook));
+            _books.Add(_booksRepository.Add(new_book));
 
-            SelectedBook = newBook;
+            SelectedBook = new_book;
         }
-
         #endregion
 
-        #region Command RemoveBookCommand Book - Удаление указанной книги
+        #region Command RemoveBookCommand Удаление указанной книги
         private ICommand _removeBookCommand;
         public ICommand RemoveBookCommand => _removeBookCommand ??= new LambdaCommand<Book>(OnRemoveBookCommandExecuted, CanRemoveBookCommandExecute);
         private bool CanRemoveBookCommandExecute(Book p) => p != null || SelectedBook != null;
@@ -119,7 +115,7 @@ namespace Bookinist.ViewModels
         #endregion
 
         public BooksViewModel()
-                : this(new DebugBooksRepository(), new UserDialogService())
+            : this(new DebugBooksRepository(), new UserDialogService())
         {
             if (!App.IsDesignTime)
                 throw new InvalidOperationException("Данный конструктор не предназначен для использования вне дизайнера VisualStudio");
@@ -129,6 +125,7 @@ namespace Bookinist.ViewModels
 
         public BooksViewModel(IRepository<Book> BooksRepository, IUserDialog UserDialog)
         {
+            _booksRepository = BooksRepository;
             _userDialog = UserDialog;
         }
 
