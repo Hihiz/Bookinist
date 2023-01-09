@@ -8,7 +8,7 @@
        xmlns:v="clr-namespace:Bookinist.Views.Windows"
         xmlns:vm="clr-namespace:Bookinist.ViewModels"
         Title="BookEditorWindow"
-        MinHeight="145"
+        MinHeight="160"
         Width="358" Height="145"
         d:DataContext="{d:DesignInstance vm:BookEditorViewModel, IsDesignTimeCreatable=True}">
 
