@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Bookinist
+namespace Bookinist.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для StatisticView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class StatisticView : UserControl
     {
-        public MainWindow()
+        public StatisticView()
         {
             InitializeComponent();
         }
