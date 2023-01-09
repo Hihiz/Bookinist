@@ -1,5 +1,4 @@
-﻿using Bookinist.DAL.Context;
-using Bookinist.DAL.Entityes;
+﻿using Bookinist.DAL.Entityes;
 using Bookinist.Infrastructure.Commands;
 using Bookinist.Repositories;
 using Bookinist.Services.Interfaces;
@@ -10,7 +9,7 @@ namespace Bookinist.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
-        private readonly BookinistContext _db;
+        private readonly IUserDialog _userDialog;
         private readonly IRepository<Book> _books;
         private readonly IRepository<Seller> _sellers;
         private readonly IRepository<Buyer> _buyers;
@@ -39,7 +38,7 @@ namespace Bookinist.ViewModels
         private bool CanShowBooksViewCommandExecute() => true;
         private void OnShowBooksViewCommandExecuted()
         {
-            CurrentModel = new BooksViewModel(_books);
+            CurrentModel = new BooksViewModel(_books, _userDialog);
         }
         #endregion
 
@@ -70,9 +69,9 @@ namespace Bookinist.ViewModels
         }
         #endregion
 
-        public MainWindowViewModel(BookinistContext db, IRepository<Book> Books, IRepository<Seller> Sellers, IRepository<Buyer> Buyers, ISalesService SalesService, IRepository<Deal> Deals)
+        public MainWindowViewModel(IUserDialog UserDialog, IRepository<Book> Books, IRepository<Seller> Sellers, IRepository<Buyer> Buyers, ISalesService SalesService, IRepository<Deal> Deals)
         {
-            _db = db;
+            _userDialog = UserDialog;
             _books = Books;
             _sellers = Sellers;
             _buyers = Buyers;
