@@ -1,6 +1,7 @@
 ﻿using Bookinist.DAL.Entityes;
 using Bookinist.Models;
 using Bookinist.Repositories;
+using Bookinist.Service;
 using Bookinist.ViewModels.Base;
 using MathCore.WPF.Commands;
 using Microsoft.EntityFrameworkCore;
@@ -32,17 +33,22 @@ namespace Bookinist.ViewModels
         {
             var bestsellersQuery = _deals.Items
                .GroupBy(b => b.Book.Id)
-               .Select(deals => new { BookId = deals.Key, Count = deals.Count() })
+               .Select(deals => new { BookId = deals.Key, Count = deals.Count(), Sum = deals.Sum(d => d.Price) })
                .OrderByDescending(deals => deals.Count)
                .Take(5)
                .Join(_books.Items,
                     deals => deals.BookId,
                     book => book.Id,
-                    (deals, book) => new BestSellerInfo { Book = book, SellCount = deals.Count });
+                     (deals, book) => new BestSellerInfo
+                     {
+                         Book = book,
+                         SellCount = deals.Count,
+                         SumCost = deals.Sum
+                     });
 
-            Bestsellers.Clear();
-            foreach (var bestseller in await bestsellersQuery.ToArrayAsync())
-                Bestsellers.Add(bestseller);
+            Bestsellers.AddClear(await bestsellersQuery.ToArrayAsync());
+            //foreach (var bestseller in await bestsellers_query.ToArrayAsync())
+            //    Bestsellers.Add(bestseller);
         }
         #endregion
 

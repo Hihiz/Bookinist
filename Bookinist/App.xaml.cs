@@ -10,6 +10,8 @@ namespace Bookinist
 {
     public partial class App
     {
+        public static bool IsDesignTime { get; private set; } = true;
+
         private static IHost _host;
 
         public static IHost Host => _host
@@ -24,6 +26,8 @@ namespace Bookinist
 
         protected override async void OnStartup(StartupEventArgs e)
         {
+            IsDesignTime = false;
+
             var host = Host;
 
             using (var scope = Services.CreateScope())
