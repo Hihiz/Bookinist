@@ -29,7 +29,7 @@ namespace Bookinist.Services
 
             var deal = new Deal
             {
-                Books = book,
+                Book = book,
                 Seller = Seller,
                 Buyer = Buyer,
                 Price = Price

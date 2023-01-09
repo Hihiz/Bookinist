@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace Bookinist
 {
-    public partial class App : Application
+    public partial class App
     {
         private static IHost _host;
 
@@ -27,7 +27,8 @@ namespace Bookinist
             var host = Host;
 
             using (var scope = Services.CreateScope())
-               await scope.ServiceProvider.GetRequiredService<DbInitializer>().InitializeAsync();
+                scope.ServiceProvider.GetRequiredService<DbInitializer>().InitializeAsync().Wait();
+            //await scope.ServiceProvider.GetRequiredService<DbInitializer>().InitializeAsync();
 
             base.OnStartup(e);
             await host.StartAsync();
