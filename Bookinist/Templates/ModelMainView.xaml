@@ -3,7 +3,7 @@
                     xmlns:system="clr-namespace:System;assembly=System.Runtime"
                     xmlns:vm="clr-namespace:Bookinist.ViewModels"
                     xmlns:view="clr-namespace:Bookinist.Views">
-
+    
     <DataTemplate DataType="{x:Type system:Int32}">
         <TextBlock Text="{Binding StringFormat=int:{0}}"/>
     </DataTemplate>

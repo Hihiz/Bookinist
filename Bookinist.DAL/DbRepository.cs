@@ -23,9 +23,9 @@ namespace Bookinist.DAL
 
         public T Get(int id) => Items.SingleOrDefault(item => item.Id == id);
 
-        public async Task<T> GetAsync(int id, CancellationToken Cancel = default) =>
-            await Items.SingleOrDefaultAsync(item => item.Id == id, Cancel)
-            .ConfigureAwait(false);
+        public async Task<T> GetAsync(int id, CancellationToken Cancel = default) => await Items
+           .SingleOrDefaultAsync(item => item.Id == id, Cancel)
+           .ConfigureAwait(false);
 
         public T Add(T item)
         {
@@ -33,7 +33,6 @@ namespace Bookinist.DAL
             _db.Entry(item).State = EntityState.Added;
             if (AutoSaveChanges)
                 _db.SaveChanges();
-
             return item;
         }
 
@@ -43,7 +42,6 @@ namespace Bookinist.DAL
             _db.Entry(item).State = EntityState.Added;
             if (AutoSaveChanges)
                 await _db.SaveChangesAsync(Cancel).ConfigureAwait(false);
-
             return item;
         }
 
@@ -69,7 +67,9 @@ namespace Bookinist.DAL
             //if (item is null) return;
             //_db.Entry(item);
 
-            _db.Remove(new T { Id = id });
+            var item = _set.Local.FirstOrDefault(i => i.Id == id) ?? new T { Id = id };
+
+            _db.Remove(item);
 
             if (AutoSaveChanges)
                 _db.SaveChanges();
@@ -78,17 +78,8 @@ namespace Bookinist.DAL
         public async Task RemoveAsync(int id, CancellationToken Cancel = default)
         {
             _db.Remove(new T { Id = id });
-
             if (AutoSaveChanges)
                 await _db.SaveChangesAsync(Cancel).ConfigureAwait(false);
-
         }
-    }
-
-    class BooksRepository : DbRepository<Book>
-    {
-        public override IQueryable<Book> Items => base.Items.Include(item => item.Category);
-
-        public BooksRepository(BookinistContext db ) : base(db) { }
     }
 }
